@@ -23,6 +23,10 @@
 
     *{box-sizing:border-box}
     html,body{height:100%}
+
+    /* We handle scrolling in JS for a more premium feel */
+    html{scroll-behavior:auto;}
+
     body{
       margin:0;
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
@@ -65,6 +69,7 @@
       font-weight:650;
       font-size:12px;
       box-shadow: 0 0 0 1px rgba(0,0,0,.25) inset;
+      white-space:nowrap;
     }
 
     /* Hero card */
@@ -261,6 +266,24 @@
     /* Scroll reveal */
     .reveal{opacity:0; transform: translateY(16px); transition: .65s ease}
     .reveal.show{opacity:1; transform: translateY(0)}
+
+    /* ===== PREMIUM ANCHOR TRANSITIONS ===== */
+
+    /* so anchor positions don't hide under top nav */
+    :target { scroll-margin-top: 90px; }
+
+    /* arrival animation for any jumped-to element (panel/hero/footer) */
+    .jumpTarget{
+      will-change: transform, opacity, filter;
+      transition: opacity 620ms cubic-bezier(.2,.9,.2,1),
+                  transform 620ms cubic-bezier(.2,.9,.2,1),
+                  filter 620ms cubic-bezier(.2,.9,.2,1);
+    }
+    .jumpTarget.is-entering{
+      opacity: 0;
+      transform: translateY(18px) scale(0.992);
+      filter: blur(8px);
+    }
   </style>
 </head>
 
@@ -282,7 +305,7 @@
       </div>
     </div>
 
-    <section class="hero reveal">
+    <section class="hero reveal jumpTarget" id="top">
       <div class="badge">
         <span class="gold">Featured Offer</span>
         <span>Luxury retail systems adapted for Nigeria</span>
@@ -295,12 +318,10 @@
       </p>
 
       <div class="ctaRow">
-        <!-- ✅ Change the phone number here (no +, no spaces) -->
         <a class="btn primary" href="https://wa.me/2348012345678?text=Hello%20I%20would%20like%20to%20improve%20my%20retail%20profit" target="_blank" rel="noopener">
           <span class="icon">💬</span> WhatsApp
         </a>
 
-        <!-- ✅ Change email here -->
         <a class="btn" href="mailto:miguel.choueiri@hotmail.com">
           <span class="icon">✉️</span> Email
         </a>
@@ -312,7 +333,7 @@
     </section>
 
     <div class="grid">
-      <section class="panel reveal">
+      <section class="panel reveal jumpTarget" id="overview">
         <h2 class="panelTitle">Project Overview</h2>
         <p class="p muted">
           Many retailers sell well but lose profit through weak margins, blocked stock,
@@ -344,7 +365,7 @@
         </div>
       </section>
 
-      <section class="panel reveal" id="how">
+      <section class="panel reveal jumpTarget" id="how">
         <h2 class="panelTitle">Strategic Approach</h2>
 
         <div class="cards">
@@ -395,7 +416,7 @@
       </section>
     </div>
 
-    <section class="footer reveal">
+    <section class="footer reveal jumpTarget" id="contact">
       <div class="id">
         <div class="name">Miguel Choueiri</div>
         <div class="role">Retail Profit & Sales Optimization Consultant</div>
@@ -403,7 +424,6 @@
       </div>
 
       <div class="links">
-        <!-- ✅ Change these too if you want -->
         <a class="btn primary" href="https://wa.me/2348012345678?text=Hello%20I%20would%20like%20to%20improve%20my%20retail%20profit" target="_blank" rel="noopener">WhatsApp</a>
         <a class="btn" href="mailto:miguel.choueiri@hotmail.com">Email</a>
         <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
@@ -421,6 +441,69 @@
       });
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
+
+    // ===== PREMIUM ANCHOR SCROLLING =====
+    // buttery scroll easing
+    function easeInOutQuint(t){
+      return t < 0.5 ? 16*t*t*t*t*t : 1 - Math.pow(-2*t + 2, 5)/2;
+    }
+
+    function smoothScrollTo(targetY, duration){
+      const startY = window.scrollY || window.pageYOffset;
+      const diff = targetY - startY;
+      const start = performance.now();
+
+      function step(now){
+        const t = Math.min(1, (now - start) / duration);
+        const eased = easeInOutQuint(t);
+        window.scrollTo(0, startY + diff * eased);
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function animateJumpTo(hash){
+      const target = document.querySelector(hash);
+      if(!target) return;
+
+      // trigger arrival animation
+      target.classList.add('is-entering');
+
+      const headerOffset = 86; // adjust for your layout
+      const y = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+
+      const distance = Math.abs((window.scrollY || window.pageYOffset) - y);
+      const duration = Math.min(1200, Math.max(720, distance * 0.55));
+
+      smoothScrollTo(y, duration);
+
+      // unblur shortly after scroll begins
+      setTimeout(() => target.classList.remove('is-entering'), 140);
+
+      // update URL without default jump
+      history.pushState(null, "", hash);
+    }
+
+    // Intercept anchor clicks (#how, #contact, etc.)
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if(!a) return;
+      const hash = a.getAttribute('href');
+      if(!hash || hash === "#") return;
+
+      const target = document.querySelector(hash);
+      if(!target) return;
+
+      e.preventDefault();
+      animateJumpTo(hash);
+    });
+
+    // If landing directly on a hash, animate into it
+    window.addEventListener('load', () => {
+      if(location.hash && document.querySelector(location.hash)){
+        setTimeout(() => animateJumpTo(location.hash), 120);
+      }
+    });
   </script>
 </body>
 </html>
