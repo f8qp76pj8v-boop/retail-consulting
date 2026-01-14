@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Miguel Choueiri — Retail Profit & Sales Optimization</title>
+  <meta name="description" content="Retail Profit & Sales Optimization for Beauty and General Retail in Nigeria." />
 
   <style>
     :root{
@@ -11,7 +12,7 @@
       --text:#eef2f6;
       --muted:#b7c0cc;
       --gold:#d4af37;
-      --line:rgba(255,255,255,.10);
+      --line:rgba(255,255,255,.12);
       --shadow: 0 18px 60px rgba(0,0,0,.55);
       --radius:22px;
     }
@@ -26,56 +27,46 @@
       overflow:hidden;
     }
 
-    /* Full-page background photo + luxury overlay */
+    /* Full-page background photo */
     .bg{
-      position:fixed; inset:0;
+      position:fixed;
+      inset:0;
       background: url("miguel.jpg") center/cover no-repeat;
       transform: scale(1.02);
       filter: saturate(1.05) contrast(1.05);
-      
-    .overlay{
-  position:fixed; inset:0;
-  background:
-    radial-gradient(900px 500px at 20% 20%, rgba(212,175,55,.18), transparent 60%),
-    radial-gradient(800px 520px at 80% 35%, rgba(255,255,255,.10), transparent 60%),
-    linear-gradient(180deg, rgba(7,11,16,.50), rgba(7,11,16,.72));
-  backdrop-filter: blur(1.5px);
-}
+      z-index:0;
+    }
 
-    /* Center card */
+    /* Luxury overlay (lighter = more visible photo) */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(900px 500px at 20% 20%, rgba(212,175,55,.18), transparent 60%),
+        radial-gradient(800px 520px at 80% 35%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(180deg, rgba(7,11,16,.50), rgba(7,11,16,.72));
+      backdrop-filter: blur(1.5px);
+      pointer-events:none; /* don’t block clicks */
+      z-index:1;
+    }
+
+    /* Layout: card lower so it doesn't cover your face */
     .wrap{
-  position:relative;
-  height:100%;
-  display:flex;
-  align-items:flex-end;          /* push lower */
-  justify-content:center;
-  padding: 20px 20px 72px;       /* bottom space */
-  text-align:center;
-}
+      position:relative;
+      z-index:2; /* above bg + overlay */
+      height:100%;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding: 20px 20px 84px; /* lower */
+      text-align:center;
+    }
 
     .card{
-      /* Page fade transition */
-.fade-layer{
-  position:fixed; inset:0;
-  background: #070b10;
-  opacity:0;
-  pointer-events:none;
-  transition: opacity 520ms cubic-bezier(.2,.9,.2,1);
-  z-index:50;
-}
-body.leaving .fade-layer{ opacity:1; }
-
-body.leaving .card{
-  transition: transform 520ms cubic-bezier(.2,.9,.2,1), opacity 520ms cubic-bezier(.2,.9,.2,1), filter 520ms cubic-bezier(.2,.9,.2,1);
-  transform: translateY(8px) scale(.99);
-  opacity:0;
-  filter: blur(6px);
-}
-
       width:min(920px, 100%);
       border:1px solid var(--line);
       border-radius: var(--radius);
-      background: rgba(0,0,0,.38);
+      background: rgba(10,14,20,.50);
       box-shadow: var(--shadow);
       padding: 28px 22px;
       backdrop-filter: blur(10px);
@@ -101,6 +92,7 @@ body.leaving .card{
       letter-spacing:.12em;
       text-transform:uppercase;
       margin-bottom:14px;
+      white-space:nowrap;
     }
 
     h1{
@@ -133,7 +125,7 @@ body.leaving .card{
       gap:10px;
       padding:12px 18px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
       text-decoration:none;
       font-weight:800;
@@ -141,21 +133,53 @@ body.leaving .card{
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
       box-shadow: 0 14px 40px rgba(0,0,0,.35);
     }
-    .btn:hover{ transform: translateY(-2px); box-shadow: 0 20px 55px rgba(0,0,0,.45); }
+    .btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 20px 55px rgba(0,0,0,.45);
+    }
 
     .btn.primary{
       border-color: rgba(212,175,55,.45);
       background: rgba(212,175,55,.16);
     }
-    .btn.primary:hover{ background: rgba(212,175,55,.22); }
+    .btn.primary:hover{
+      background: rgba(212,175,55,.22);
+    }
 
     .hint{
       margin-top:14px;
       font-size:12.5px;
-      color: rgba(255,255,255,.55);
+      color: rgba(255,255,255,.60);
     }
 
-    /* If your file is miguel.png, change url("miguel.jpg") to url("miguel.png") */
+    /* Fade layer (smooth transition to home.html) */
+    .fade-layer{
+      position:fixed;
+      inset:0;
+      background: #070b10;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity 520ms cubic-bezier(.2,.9,.2,1);
+      z-index:50;
+    }
+    body.leaving .fade-layer{ opacity:1; }
+
+    body.leaving .card{
+      transition:
+        transform 520ms cubic-bezier(.2,.9,.2,1),
+        opacity 520ms cubic-bezier(.2,.9,.2,1),
+        filter 520ms cubic-bezier(.2,.9,.2,1);
+      transform: translateY(10px) scale(.99);
+      opacity:0;
+      filter: blur(6px);
+    }
+
+    /* Mobile: slightly higher so card doesn't feel too low */
+    @media (max-width: 720px){
+      .wrap{ padding: 18px 14px 56px; }
+      .card{ padding: 22px 16px; }
+      .pill{ font-size: 11.5px; letter-spacing:.10em; }
+    }
   </style>
 </head>
 
@@ -175,30 +199,29 @@ body.leaving .card{
 
       <div class="cta">
         <a class="btn primary" href="home.html" data-transition="fade">Enter →</a>
-        <!-- Optional: direct WhatsApp on the cover page -->
-        <!-- <a class="btn" href="https://wa.me/2348012345678?text=Hello%20Miguel%2C%20I%20want%20to%20improve%20my%20retail%20profit" target="_blank" rel="noopener">WhatsApp</a> -->
       </div>
 
       <div class="hint">Tap “Enter” to view the full methodology.</div>
     </section>
   </main>
+
   <div class="fade-layer" aria-hidden="true"></div>
-</body>
+
   <script>
-  // Smooth "Enter" transition
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a[data-transition="fade"]');
-    if(!a) return;
-    e.preventDefault();
+    // Smooth "Enter" transition
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[data-transition="fade"]');
+      if(!a) return;
 
-    const url = a.getAttribute('href');
-    document.body.classList.add('leaving');
+      e.preventDefault();
+      const url = a.getAttribute('href');
 
-    // Navigate after fade completes
-    setTimeout(() => {
-      window.location.href = url;
-    }, 520);
-  });
-</script>
+      document.body.classList.add('leaving');
 
+      setTimeout(() => {
+        window.location.href = url;
+      }, 520);
+    });
+  </script>
+</body>
 </html>
