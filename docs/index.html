@@ -1,227 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Miguel Choueiri — Retail Profit & Sales Optimization</title>
-  <meta name="description" content="Retail Profit & Sales Optimization for Beauty and General Retail in Nigeria." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Miguel Choueiri — Retail Profit Optimization</title>
 
-  <style>
-    :root{
-      --bg:#070b10;
-      --text:#eef2f6;
-      --muted:#b7c0cc;
-      --gold:#d4af37;
-      --line:rgba(255,255,255,.12);
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius:22px;
-    }
+<style>
+:root{
+  --bg:#070b10;
+  --text:#eef2f6;
+  --muted:#b7c0cc;
+  --gold:#d4af37;
+  --line:rgba(255,255,255,.10);
+  --shadow:0 18px 60px rgba(0,0,0,.55);
+  --radius:22px;
+}
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background: var(--bg);
-      overflow:hidden;
-    }
+*{box-sizing:border-box}
+html,body{height:100%}
 
-    /* Full-page background photo */
-    .bg{
-      position:fixed;
-      inset:0;
-      background: url("miguel.jpg") center/cover no-repeat;
-      transform: scale(1.02);
-      filter: saturate(1.05) contrast(1.05);
-      z-index:0;
-    }
+body{
+  margin:0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+}
 
-    /* Luxury overlay (lighter = more visible photo) */
-    .overlay{
-      position:fixed;
-      inset:0;
-      background:
-        radial-gradient(900px 500px at 20% 20%, rgba(212,175,55,.18), transparent 60%),
-        radial-gradient(800px 520px at 80% 35%, rgba(255,255,255,.10), transparent 60%),
-        linear-gradient(180deg, rgba(7,11,16,.50), rgba(7,11,16,.72));
-      backdrop-filter: blur(1.5px);
-      pointer-events:none; /* don’t block clicks */
-      z-index:1;
-    }
+/* Background image */
+.bg{
+  position:fixed;
+  inset:0;
+  background:url("miguel.jpg") center/cover no-repeat;
+  filter:saturate(1.05) contrast(1.05);
+}
 
-    /* Layout: card lower so it doesn't cover your face */
-    .wrap{
-      position:relative;
-      z-index:2; /* above bg + overlay */
-      height:100%;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      padding: 20px 20px 84px; /* lower */
-      text-align:center;
-    }
+/* Dark luxury overlay */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(900px 500px at 20% 20%, rgba(212,175,55,.18), transparent 60%),
+    linear-gradient(180deg, rgba(7,11,16,.55), rgba(7,11,16,.78));
+}
 
-    .card{
-      width:min(920px, 100%);
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(10,14,20,.50);
-      box-shadow: var(--shadow);
-      padding: 28px 22px;
-      backdrop-filter: blur(10px);
-      animation: rise .9s cubic-bezier(.2,.9,.2,1) both;
-    }
+/* Center container */
+.wrap{
+  position:relative;
+  height:100%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:20px 20px 80px;
+  text-align:center;
+}
 
-    @keyframes rise{
-      from{opacity:0; transform: translateY(18px) scale(.99); filter: blur(8px);}
-      to{opacity:1; transform: translateY(0) scale(1); filter: blur(0);}
-    }
+/* Card */
+.card{
+  width:min(920px,100%);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(10px);
+  box-shadow:var(--shadow);
+  padding:28px 22px;
+  animation:rise .9s cubic-bezier(.2,.9,.2,1) both;
+}
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,.35);
-      background: rgba(212,175,55,.10);
-      color: var(--gold);
-      font-weight:750;
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      margin-bottom:14px;
-      white-space:nowrap;
-    }
+@keyframes rise{
+  from{opacity:0; transform:translateY(20px); filter:blur(10px);}
+  to{opacity:1; transform:none; filter:none;}
+}
 
-    h1{
-      margin:0 0 10px 0;
-      font-size: clamp(30px, 4vw, 48px);
-      line-height:1.05;
-      letter-spacing:-.5px;
-    }
+.pill{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(212,175,55,.35);
+  background:rgba(212,175,55,.12);
+  color:var(--gold);
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
 
-    .sub{
-      margin:0 auto;
-      max-width: 70ch;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height:1.6;
-    }
+h1{
+  margin:0 0 10px;
+  font-size:clamp(30px,4vw,48px);
+  line-height:1.05;
+}
 
-    .cta{
-      margin-top:18px;
-      display:flex;
-      justify-content:center;
-      gap:12px;
-      flex-wrap:wrap;
-    }
+.sub{
+  max-width:70ch;
+  margin:0 auto;
+  color:var(--muted);
+  font-size:15.5px;
+  line-height:1.6;
+}
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:12px 18px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      text-decoration:none;
-      font-weight:800;
-      color: var(--text);
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-      box-shadow: 0 14px 40px rgba(0,0,0,.35);
-    }
-    .btn:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 20px 55px rgba(0,0,0,.45);
-    }
+.cta{
+  margin-top:20px;
+}
 
-    .btn.primary{
-      border-color: rgba(212,175,55,.45);
-      background: rgba(212,175,55,.16);
-    }
-    .btn.primary:hover{
-      background: rgba(212,175,55,.22);
-    }
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 22px;
+  border-radius:14px;
+  border:1px solid rgba(212,175,55,.45);
+  background:rgba(212,175,55,.18);
+  color:var(--text);
+  font-weight:800;
+  text-decoration:none;
+  transition:all .25s ease;
+}
 
-    .hint{
-      margin-top:14px;
-      font-size:12.5px;
-      color: rgba(255,255,255,.60);
-    }
+.btn:hover{
+  transform:translateY(-2px);
+  background:rgba(212,175,55,.26);
+}
 
-    /* Fade layer (smooth transition to home.html) */
-    .fade-layer{
-      position:fixed;
-      inset:0;
-      background: #070b10;
-      opacity:0;
-      pointer-events:none;
-      transition: opacity 520ms cubic-bezier(.2,.9,.2,1);
-      z-index:50;
-    }
-    body.leaving .fade-layer{ opacity:1; }
+/* Fade transition */
+.fade-layer{
+  position:fixed;
+  inset:0;
+  background:#070b10;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .55s cubic-bezier(.2,.9,.2,1);
+  z-index:50;
+}
 
-    body.leaving .card{
-      transition:
-        transform 520ms cubic-bezier(.2,.9,.2,1),
-        opacity 520ms cubic-bezier(.2,.9,.2,1),
-        filter 520ms cubic-bezier(.2,.9,.2,1);
-      transform: translateY(10px) scale(.99);
-      opacity:0;
-      filter: blur(6px);
-    }
-
-    /* Mobile: slightly higher so card doesn't feel too low */
-    @media (max-width: 720px){
-      .wrap{ padding: 18px 14px 56px; }
-      .card{ padding: 22px 16px; }
-      .pill{ font-size: 11.5px; letter-spacing:.10em; }
-    }
-  </style>
+body.leaving .fade-layer{opacity:1}
+</style>
 </head>
 
 <body>
-  <div class="bg" aria-hidden="true"></div>
-  <div class="overlay" aria-hidden="true"></div>
+<div class="bg"></div>
+<div class="overlay"></div>
 
-  <main class="wrap">
-    <section class="card">
-      <div class="pill">Abuja • Kano • Lagos</div>
+<main class="wrap">
+  <section class="card">
+    <div class="pill">Abuja • Kano • Lagos</div>
+    <h1>Miguel Choueiri</h1>
+    <p class="sub">
+      Retail Profit & Sales Optimization for <b>Beauty</b> and <b>General Retail</b> in Nigeria.
+      I help retailers increase <b>profit</b>, <b>basket size</b>, and <b>repeat customers</b>
+      with practical in-store systems.
+    </p>
 
-      <h1>Miguel Choueiri</h1>
-      <p class="sub">
-        Retail Profit & Sales Optimization for <b>Beauty</b> and <b>General Retail</b> in Nigeria.
-        I help retailers increase <b>profit</b>, <b>basket size</b>, and <b>repeat customers</b> — with practical in-store systems.
-      </p>
+    <div class="cta">
+      <a class="btn" href="home.html" data-enter>Enter</a>
+    </div>
+  </section>
+</main>
 
-      <div class="cta">
-        <a class="btn primary" href="home.html" data-transition="fade">Enter →</a>
-      </div>
+<div class="fade-layer"></div>
 
-      <div class="hint">Tap “Enter” to view the full methodology.</div>
-    </section>
-  </main>
-
-  <div class="fade-layer" aria-hidden="true"></div>
-
-  <script>
-    // Smooth "Enter" transition
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[data-transition="fade"]');
-      if(!a) return;
-
-      e.preventDefault();
-      const url = a.getAttribute('href');
-
-      document.body.classList.add('leaving');
-
-      setTimeout(() => {
-        window.location.href = url;
-      }, 520);
-    });
-  </script>
+<script>
+document.addEventListener("click", e=>{
+  const a=e.target.closest("[data-enter]");
+  if(!a) return;
+  e.preventDefault();
+  document.body.classList.add("leaving");
+  setTimeout(()=>{location.href=a.href},550);
+});
+</script>
 </body>
 </html>
