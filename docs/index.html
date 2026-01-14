@@ -32,28 +32,46 @@
       background: url("miguel.jpg") center/cover no-repeat;
       transform: scale(1.02);
       filter: saturate(1.05) contrast(1.05);
-    }
+      
     .overlay{
-      position:fixed; inset:0;
-      background:
-        radial-gradient(900px 500px at 20% 20%, rgba(212,175,55,.16), transparent 60%),
-        radial-gradient(800px 520px at 80% 35%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg, rgba(7,11,16,.78), rgba(7,11,16,.92));
-      backdrop-filter: blur(2px);
-    }
+  position:fixed; inset:0;
+  background:
+    radial-gradient(900px 500px at 20% 20%, rgba(212,175,55,.18), transparent 60%),
+    radial-gradient(800px 520px at 80% 35%, rgba(255,255,255,.10), transparent 60%),
+    linear-gradient(180deg, rgba(7,11,16,.50), rgba(7,11,16,.72));
+  backdrop-filter: blur(1.5px);
+}
 
     /* Center card */
     .wrap{
-      position:relative;
-      height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      text-align:center;
-    }
+  position:relative;
+  height:100%;
+  display:flex;
+  align-items:flex-end;          /* push lower */
+  justify-content:center;
+  padding: 20px 20px 72px;       /* bottom space */
+  text-align:center;
+}
 
     .card{
+      /* Page fade transition */
+.fade-layer{
+  position:fixed; inset:0;
+  background: #070b10;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 520ms cubic-bezier(.2,.9,.2,1);
+  z-index:50;
+}
+body.leaving .fade-layer{ opacity:1; }
+
+body.leaving .card{
+  transition: transform 520ms cubic-bezier(.2,.9,.2,1), opacity 520ms cubic-bezier(.2,.9,.2,1), filter 520ms cubic-bezier(.2,.9,.2,1);
+  transform: translateY(8px) scale(.99);
+  opacity:0;
+  filter: blur(6px);
+}
+
       width:min(920px, 100%);
       border:1px solid var(--line);
       border-radius: var(--radius);
@@ -156,7 +174,7 @@
       </p>
 
       <div class="cta">
-        <a class="btn primary" href="home.html">Enter →</a>
+        <a class="btn primary" href="home.html" data-transition="fade">Enter →</a>
         <!-- Optional: direct WhatsApp on the cover page -->
         <!-- <a class="btn" href="https://wa.me/2348012345678?text=Hello%20Miguel%2C%20I%20want%20to%20improve%20my%20retail%20profit" target="_blank" rel="noopener">WhatsApp</a> -->
       </div>
@@ -164,5 +182,23 @@
       <div class="hint">Tap “Enter” to view the full methodology.</div>
     </section>
   </main>
+  <div class="fade-layer" aria-hidden="true"></div>
 </body>
+  <script>
+  // Smooth "Enter" transition
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-transition="fade"]');
+    if(!a) return;
+    e.preventDefault();
+
+    const url = a.getAttribute('href');
+    document.body.classList.add('leaving');
+
+    // Navigate after fade completes
+    setTimeout(() => {
+      window.location.href = url;
+    }, 520);
+  });
+</script>
+
 </html>
