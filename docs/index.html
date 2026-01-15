@@ -11,17 +11,22 @@
     --muted:#c7cfda;
     --gold:#d4af37;
     --gold2:#b8860b;
+    --bg:#070b10;
   }
 
   *{box-sizing:border-box}
   html,body{height:100%}
 
+  /* ✅ allow page scrolling + smooth slide */
+  html{ scroll-behavior:smooth; }
+
   body{
     margin:0;
     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
     color:var(--text);
-    background:#070b10;
-    overflow:hidden;
+    background:var(--bg);
+    overflow-x:hidden;   /* ✅ keep horizontal clean */
+    overflow-y:auto;     /* ✅ allow vertical scroll */
   }
 
   /* Full photo (clear) */
@@ -30,6 +35,7 @@
     background:url("miguel.jpg") center/cover no-repeat;
     filter:saturate(1.05) contrast(1.05);
     transform: scale(1.01);
+    z-index:-2;
   }
 
   /* Subtle readability only (NOT opacity on the photo) */
@@ -39,12 +45,12 @@
       radial-gradient(1200px 700px at 50% 25%, rgba(0,0,0,.06), rgba(0,0,0,.55) 72%),
       linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.55));
     pointer-events:none;
+    z-index:-1;
   }
 
-  /* No big box — just text + wide button */
-  .wrap{
-    position:relative;
-    height:100%;
+  /* ===== COVER ===== */
+  .cover{
+    min-height:100vh;
     display:flex;
     align-items:flex-end;
     justify-content:center;
@@ -108,23 +114,38 @@
     filter: brightness(1.02);
   }
 
-  /* Smooth classy fade to home.html */
-  .fade{
-    position:fixed; inset:0;
-    background:#070b10;
-    opacity:0;
-    pointer-events:none;
-    transition: opacity .55s cubic-bezier(.2,.9,.2,1);
-    z-index:99;
+  /* ===== HOME SECTION (below cover) ===== */
+  .home{
+    min-height:100vh;
+    background: var(--bg);
+    padding: 88px 18px 120px;
+    display:flex;
+    justify-content:center;
   }
-  body.leaving .fade{opacity:1}
-  body.leaving .content{
-    transition: transform .55s cubic-bezier(.2,.9,.2,1),
-                opacity .55s cubic-bezier(.2,.9,.2,1),
-                filter .55s cubic-bezier(.2,.9,.2,1);
-    transform: translateY(10px);
-    opacity:0;
-    filter: blur(8px);
+
+  .home-inner{
+    width:min(1100px, 94vw);
+  }
+
+  .home-title{
+    margin:0 0 14px;
+    font-size:clamp(26px, 3.2vw, 40px);
+    letter-spacing:-.4px;
+  }
+
+  .home-text{
+    margin:0;
+    max-width:70ch;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:16px;
+  }
+
+  /* Optional: a subtle divider line at top of home */
+  .divider{
+    height:1px;
+    background: rgba(255,255,255,.10);
+    margin: 0 0 28px;
   }
 </style>
 </head>
@@ -133,7 +154,8 @@
   <div class="bg" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
 
-  <main class="wrap">
+  <!-- ✅ COVER / HERO -->
+  <main class="cover" id="cover">
     <section class="content">
       <h1>Miguel Choueiri</h1>
       <p class="sub">
@@ -142,22 +164,31 @@
       </p>
 
       <div class="cta">
-        <a class="enter" href="home.html" data-enter>
+        <!-- ✅ now scrolls down instead of changing page -->
+        <a class="enter" href="#home" id="enterBtn">
           Enter <span aria-hidden="true">→</span>
         </a>
       </div>
     </section>
   </main>
 
-  <div class="fade" aria-hidden="true"></div>
+  <!-- ✅ HOME (the real page content starts here) -->
+  <section class="home" id="home">
+    <div class="home-inner">
+      <div class="divider"></div>
+      <h2 class="home-title">Home</h2>
+      <p class="home-text">
+        Put your real content here: services, case studies, contact, etc.
+        If you paste your existing <code>home.html</code> content, I’ll integrate it here cleanly (same style, same typography).
+      </p>
+    </div>
+  </section>
 
 <script>
-  document.addEventListener("click", (e) => {
-    const a = e.target.closest("[data-enter]");
-    if(!a) return;
+  // ✅ Smooth scroll (keeps it consistent even if browser ignores scroll-behavior)
+  document.getElementById("enterBtn").addEventListener("click", (e) => {
     e.preventDefault();
-    document.body.classList.add("leaving");
-    setTimeout(() => { window.location.href = a.getAttribute("href"); }, 550);
+    document.getElementById("home").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 </script>
 </body>
