@@ -6,7 +6,7 @@
 <title>Miguel Choueiri — Retail Profit & Sales Optimization</title>
 <meta name="description" content="Luxury retail systems adapted for beauty and general retail businesses in Nigeria. Increase profit, basket size, and customer loyalty." />
 
-<!-- ✅ NEW TYPOGRAPHY (signature style like your image) -->
+<!-- Signature typography for cover title -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italianno&display=swap" rel="stylesheet">
@@ -80,7 +80,6 @@
     to{opacity:1; transform:none; filter:none;}
   }
 
-  /* ✅ NEW: signature typography for cover title */
   .cover h1{
     margin:0 0 10px;
     font-family: "Italianno", cursive;
@@ -109,7 +108,6 @@
     justify-content:center;
   }
 
-  /* ✅ FIX: these belong on .enter (not on hover) */
   .enter{
     width:min(640px, 92vw);
     height:56px;
@@ -568,6 +566,10 @@
   </section>
 
 <script>
+  // ✅ FIX: prevent browser restoring old scroll on refresh
+  history.scrollRestoration = "manual";
+  window.addEventListener("load", () => window.scrollTo(0, 0));
+
   // Scroll reveal (Canva-like)
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
@@ -577,7 +579,7 @@
   }, { threshold: 0.12 });
   revealEls.forEach(el => io.observe(el));
 
-  // ===== PREMIUM ANCHOR SCROLLING =====
+  // Premium anchor scrolling
   function easeInOutQuint(t){
     return t < 0.5 ? 16*t*t*t*t*t : 1 - Math.pow(-2*t + 2, 5)/2;
   }
@@ -635,9 +637,9 @@
     animateJumpTo(hash);
   });
 
-  // If landing directly on a hash, animate into it
+  // ✅ FIX: only auto-jump on load if it's NOT #home
   window.addEventListener('load', () => {
-    if(location.hash && document.querySelector(location.hash)){
+    if(location.hash && location.hash !== "#home" && document.querySelector(location.hash)){
       setTimeout(() => animateJumpTo(location.hash), 120);
     }
   });
