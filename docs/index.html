@@ -4,32 +4,41 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Miguel Choueiri — Retail Profit & Sales Optimization</title>
+<meta name="description" content="Luxury retail systems adapted for beauty and general retail businesses in Nigeria. Increase profit, basket size, and customer loyalty." />
 
 <style>
   :root{
+    --bg:#070b10;
+    --panel:#0f1620;
+    --panel2:#0c121b;
     --text:#eef2f6;
-    --muted:#c7cfda;
+    --muted:#b7c0cc;
     --gold:#d4af37;
     --gold2:#b8860b;
-    --bg:#070b10;
+    --line:rgba(255,255,255,.08);
+    --shadow: 0 18px 60px rgba(0,0,0,.45);
+    --shadow2: 0 12px 40px rgba(0,0,0,.35);
+    --radius:22px;
   }
 
   *{box-sizing:border-box}
   html,body{height:100%}
 
-  /* ✅ allow page scrolling + smooth slide */
-  html{ scroll-behavior:smooth; }
-
   body{
     margin:0;
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, sans-serif;
     color:var(--text);
-    background:var(--bg);
-    overflow-x:hidden;   /* ✅ keep horizontal clean */
-    overflow-y:auto;     /* ✅ allow vertical scroll */
+    background: var(--bg);
+    overflow-x:hidden;
+    overflow-y:auto;
   }
 
-  /* Full photo (clear) */
+  a{color:inherit}
+
+  /* =========================
+     COVER (TOP) — FULL PHOTO
+     ========================= */
+
   .bg{
     position:fixed; inset:0;
     background:url("miguel.jpg") center/cover no-repeat;
@@ -38,7 +47,6 @@
     z-index:-2;
   }
 
-  /* Subtle readability only (NOT opacity on the photo) */
   .vignette{
     position:fixed; inset:0;
     background:
@@ -48,7 +56,6 @@
     z-index:-1;
   }
 
-  /* ===== COVER ===== */
   .cover{
     min-height:100vh;
     display:flex;
@@ -58,7 +65,7 @@
     text-align:center;
   }
 
-  .content{
+  .coverContent{
     width:min(980px, 94vw);
     animation: rise .9s cubic-bezier(.2,.9,.2,1) both;
   }
@@ -68,7 +75,7 @@
     to{opacity:1; transform:none; filter:none;}
   }
 
-  h1{
+  .cover h1{
     margin:0 0 10px;
     font-size:clamp(34px, 4.6vw, 58px);
     line-height:1.02;
@@ -76,10 +83,10 @@
     text-shadow: 0 18px 60px rgba(0,0,0,.55);
   }
 
-  .sub{
+  .cover .sub{
     margin:0 auto;
     max-width:72ch;
-    color:var(--muted);
+    color:rgba(238,242,246,.86);
     font-size:16px;
     line-height:1.7;
     text-shadow: 0 18px 60px rgba(0,0,0,.55);
@@ -91,7 +98,6 @@
     justify-content:center;
   }
 
-  /* WIDE horizontal rectangle button */
   .enter{
     width:min(640px, 92vw);
     height:56px;
@@ -114,38 +120,266 @@
     filter: brightness(1.02);
   }
 
-  /* ===== HOME SECTION (below cover) ===== */
+  /* =========================
+     HOME (YOUR HOME.HTML)
+     ========================= */
+
+  /* We keep your premium scroll in JS (so disable native smooth) */
+  html{scroll-behavior:auto;}
+
   .home{
-    min-height:100vh;
-    background: var(--bg);
-    padding: 88px 18px 120px;
-    display:flex;
-    justify-content:center;
+    position:relative;
+    padding: 22px 0 60px;
+    background:
+      radial-gradient(1200px 700px at 18% 12%, rgba(212,175,55,.22), transparent 60%),
+      radial-gradient(900px 520px at 88% 30%, rgba(255,255,255,.08), transparent 60%),
+      radial-gradient(900px 520px at 70% 90%, rgba(212,175,55,.10), transparent 55%),
+      var(--bg);
   }
 
-  .home-inner{
-    width:min(1100px, 94vw);
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 16px 60px}
+
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;margin-bottom:18px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border:1px solid var(--line);border-radius:14px;
+    background:rgba(255,255,255,.03);
+    box-shadow: var(--shadow2);
+    backdrop-filter: blur(10px);
+  }
+  .dot{
+    width:10px;height:10px;border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--gold) 45%, rgba(212,175,55,.35) 70%);
+    box-shadow: 0 0 24px rgba(212,175,55,.35);
+  }
+  .brand b{letter-spacing:.2px}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:9px 12px;border-radius:999px;
+    border:1px solid rgba(212,175,55,.35);
+    background: rgba(212,175,55,.10);
+    color: var(--gold);
+    font-weight:650;
+    font-size:12px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.25) inset;
+    white-space:nowrap;
   }
 
-  .home-title{
-    margin:0 0 14px;
-    font-size:clamp(26px, 3.2vw, 40px);
+  .hero{
+    position:relative;
+    border-radius: var(--radius);
+    border:1px solid var(--line);
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    background:
+      radial-gradient(1000px 240px at 15% 0%, rgba(212,175,55,.22), transparent 65%),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    padding:26px;
+  }
+
+  .heroPhoto{ float:right; margin-left:22px; margin-bottom:12px; }
+  .heroPhoto img{
+    width:150px;height:150px;object-fit:cover;border-radius:20px;
+    border:1px solid rgba(212,175,55,.45);
+    box-shadow: 0 20px 50px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05) inset;
+    background:linear-gradient(180deg,#111,#000);
+  }
+  @media (max-width: 720px){
+    .heroPhoto{ float:none; display:flex; justify-content:center; margin:0 0 16px 0; }
+  }
+
+  .hero::after{
+    content:"";
+    position:absolute; inset:-2px;
+    background:
+      radial-gradient(700px 220px at 60% 10%, rgba(212,175,55,.10), transparent 60%),
+      radial-gradient(600px 220px at 10% 20%, rgba(255,255,255,.07), transparent 60%);
+    pointer-events:none;
+    filter: blur(18px);
+    opacity:.9;
+  }
+  .hero > *{position:relative; z-index:1}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:7px 12px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.10);
+    background: rgba(0,0,0,.18);
+    color: var(--muted);
+    font-size:12.5px;
+    letter-spacing:.3px;
+    margin-bottom:12px;
+  }
+  .badge .gold{
+    color:var(--gold);
+    font-weight:700;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:11px;
+  }
+
+  .home h1{
+    margin:0 0 10px 0;
+    font-size:36px;
+    line-height:1.08;
     letter-spacing:-.4px;
   }
-
-  .home-text{
+  .home .sub{
     margin:0;
     max-width:70ch;
     color:var(--muted);
-    line-height:1.8;
-    font-size:16px;
+    font-size:15.5px;
+    line-height:1.55;
   }
 
-  /* Optional: a subtle divider line at top of home */
-  .divider{
-    height:1px;
-    background: rgba(255,255,255,.10);
-    margin: 0 0 28px;
+  .ctaRow{
+    display:flex;flex-wrap:wrap;gap:12px;
+    margin-top:18px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    gap:10px;
+    padding:12px 16px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background: rgba(255,255,255,.03);
+    text-decoration:none;
+    font-weight:700;
+    font-size:14px;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    box-shadow: 0 10px 28px rgba(0,0,0,.22);
+  }
+  .btn:hover{transform: translateY(-2px); box-shadow: 0 18px 44px rgba(0,0,0,.35);}
+  .btn.primary{
+    border-color: rgba(212,175,55,.45);
+    background: rgba(212,175,55,.14);
+  }
+  .btn.primary:hover{background: rgba(212,175,55,.20);}
+  .btn .icon{opacity:.9}
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap:16px;
+    margin-top:16px;
+  }
+  @media (max-width: 920px){
+    .home h1{font-size:32px}
+    .grid{grid-template-columns:1fr}
+  }
+
+  .panel{
+    border-radius: var(--radius);
+    border:1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    box-shadow: var(--shadow2);
+    padding:18px;
+    backdrop-filter: blur(10px);
+  }
+  .panelTitle{
+    margin:0 0 10px 0;
+    color: rgba(212,175,55,.95);
+    letter-spacing:.24em;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
+  }
+  .p{
+    margin:0 0 10px 0;
+    color: var(--text);
+    line-height:1.6;
+    font-size:14.5px;
+  }
+  .muted{color:var(--muted)}
+
+  .cards{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:12px;
+    margin-top:10px;
+  }
+  .card{
+    border-radius: 18px;
+    border:1px solid rgba(255,255,255,.08);
+    background: rgba(0,0,0,.18);
+    padding:14px 14px;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    box-shadow: 0 12px 28px rgba(0,0,0,.25);
+  }
+  .card:hover{
+    transform: translateY(-4px);
+    border-color: rgba(212,175,55,.35);
+    box-shadow: 0 18px 44px rgba(0,0,0,.35);
+  }
+  .cardTop{display:flex;align-items:flex-start;gap:12px}
+  .num{
+    width:34px;height:34px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    background: linear-gradient(180deg, rgba(212,175,55,1), rgba(184,134,11,.88));
+    color:#111;
+    font-weight:900;
+    flex:0 0 34px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset, 0 10px 24px rgba(212,175,55,.14);
+  }
+  .card b{display:block;margin-bottom:3px;font-size:15px}
+  .small{font-size:13.5px;color:var(--muted);line-height:1.5}
+
+  .bullets{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:10px;
+    margin-top:10px;
+  }
+  .bullet{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:12px 12px;
+    border-radius: 16px;
+    border:1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.02);
+  }
+  .check{
+    width:22px;height:22px;border-radius:8px;
+    background: rgba(212,175,55,.16);
+    border: 1px solid rgba(212,175,55,.35);
+    display:flex;align-items:center;justify-content:center;
+    margin-top:2px;
+    flex:0 0 22px;
+  }
+
+  .footer{
+    margin-top:16px;
+    display:flex;flex-wrap:wrap;gap:12px;
+    align-items:center;justify-content:space-between;
+    padding:16px 18px;
+    border-radius: var(--radius);
+    border:1px solid var(--line);
+    background: rgba(255,255,255,.02);
+  }
+  .id{display:flex;flex-direction:column;gap:4px;}
+  .name{font-weight:900;font-size:15px}
+  .role{color:var(--muted);font-size:13px}
+  .links{display:flex;flex-wrap:wrap;gap:10px}
+
+  /* Scroll reveal */
+  .reveal{opacity:0; transform: translateY(16px); transition: .65s ease}
+  .reveal.show{opacity:1; transform: translateY(0)}
+
+  /* ===== PREMIUM ANCHOR TRANSITIONS ===== */
+  :target { scroll-margin-top: 90px; }
+
+  .jumpTarget{
+    will-change: transform, opacity, filter;
+    transition: opacity 620ms cubic-bezier(.2,.9,.2,1),
+                transform 620ms cubic-bezier(.2,.9,.2,1),
+                filter 620ms cubic-bezier(.2,.9,.2,1);
+  }
+  .jumpTarget.is-entering{
+    opacity: 0;
+    transform: translateY(18px) scale(0.992);
+    filter: blur(8px);
   }
 </style>
 </head>
@@ -154,9 +388,9 @@
   <div class="bg" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
 
-  <!-- ✅ COVER / HERO -->
+  <!-- ================= COVER ================= -->
   <main class="cover" id="cover">
-    <section class="content">
+    <section class="coverContent">
       <h1>Miguel Choueiri</h1>
       <p class="sub">
         Retail Profit & Sales Optimization for <b>Beauty</b> and <b>General Retail</b> in Nigeria.
@@ -164,7 +398,6 @@
       </p>
 
       <div class="cta">
-        <!-- ✅ now scrolls down instead of changing page -->
         <a class="enter" href="#home" id="enterBtn">
           Enter <span aria-hidden="true">→</span>
         </a>
@@ -172,23 +405,235 @@
     </section>
   </main>
 
-  <!-- ✅ HOME (the real page content starts here) -->
+  <!-- ================= HOME ================= -->
   <section class="home" id="home">
-    <div class="home-inner">
-      <div class="divider"></div>
-      <h2 class="home-title">Home</h2>
-      <p class="home-text">
-        Put your real content here: services, case studies, contact, etc.
-        If you paste your existing <code>home.html</code> content, I’ll integrate it here cleanly (same style, same typography).
-      </p>
+    <div class="wrap">
+
+      <div class="nav reveal">
+        <div class="brand">
+          <span class="dot"></span>
+          <div>
+            <b>Miguel Choueiri</b><br/>
+            <span class="muted" style="font-size:12.5px;">Retail Profit & Sales Optimization</span>
+          </div>
+        </div>
+
+        <div class="pill">
+          <span style="opacity:.9;">📍</span>
+          Abuja • Kano • Lagos
+        </div>
+      </div>
+
+      <section class="hero reveal jumpTarget" id="top">
+        <div class="heroPhoto">
+          <img src="miguel.jpg" alt="Miguel Choueiri">
+        </div>
+
+        <div class="badge">
+          <span class="gold">Featured Offer</span>
+          <span>Luxury retail systems adapted for Nigeria</span>
+        </div>
+
+        <h1>Retail Profit & Sales Optimization</h1>
+        <p class="sub">
+          I help <b>beauty</b> and <b>general retail</b> businesses increase <b>profit</b>, <b>basket size</b>,
+          and <b>customer loyalty</b> — <b>without increasing traffic</b>.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="https://wa.me/2348012345678?text=Hello%20I%20would%20like%20to%20improve%20my%20retail%20profit" target="_blank" rel="noopener">
+            <span class="icon">💬</span> WhatsApp
+          </a>
+
+          <a class="btn" href="mailto:miguel.choueiri@hotmail.com">
+            <span class="icon">✉️</span> Email
+          </a>
+
+          <a class="btn" href="#how">
+            <span class="icon">⚡</span> How it works
+          </a>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="panel reveal jumpTarget" id="overview">
+          <h2 class="panelTitle">Project Overview</h2>
+          <p class="p muted">
+            Many retailers sell well but lose profit through weak margins, blocked stock,
+            and unstructured sales behavior. I fix those leaks with simple systems that work in real stores.
+          </p>
+
+          <div class="bullets">
+            <div class="bullet">
+              <div class="check">✓</div>
+              <div>
+                <b>Pricing & Margin Rules</b>
+                <div class="small">Protect profit with simple pricing logic and margin discipline.</div>
+              </div>
+            </div>
+            <div class="bullet">
+              <div class="check">✓</div>
+              <div>
+                <b>Stock Rotation</b>
+                <div class="small">Reduce dead stock and improve cash flow with better product mix.</div>
+              </div>
+            </div>
+            <div class="bullet">
+              <div class="check">✓</div>
+              <div>
+                <b>Repeat Customers</b>
+                <div class="small">Simple CRM with WhatsApp/Excel to drive loyalty and repeat purchases.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel reveal jumpTarget" id="how">
+          <h2 class="panelTitle">Strategic Approach</h2>
+
+          <!-- ✅ FIXED: missing wrapper .cards -->
+          <div class="cards">
+
+            <a href="step-1.html" style="text-decoration:none;color:inherit;">
+              <div class="card">
+                <div class="cardTop">
+                  <div class="num">1</div>
+                  <div>
+                    <b>Profit Audit</b>
+                    <div class="small">Find where money is leaking: pricing, stock, sales behavior.</div>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <div class="card">
+              <div class="cardTop">
+                <div class="num">2</div>
+                <div>
+                  <b>Optimization Plan</b>
+                  <div class="small">Clear actions to improve profit per customer and cash flow.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="cardTop">
+                <div class="num">3</div>
+                <div>
+                  <b>Implementation</b>
+                  <div class="small">Coaching + KPI tracking to make the system stick with your team.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="cardTop">
+                <div class="num">4</div>
+                <div>
+                  <b>Monthly Support (optional)</b>
+                  <div class="small">Ongoing improvement, training, and performance monitoring.</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <p class="p muted" style="margin-top:12px;">
+            <b>Results:</b> higher profit per sale • better stock rotation • more repeat customers • stronger sales teams.
+          </p>
+        </section>
+      </div>
+
+      <section class="footer reveal jumpTarget" id="contact">
+        <div class="id">
+          <div class="name">Miguel Choueiri</div>
+          <div class="role">Retail Profit & Sales Optimization Consultant</div>
+          <div class="role">Beauty • General Retail • Abuja • Kano • Lagos</div>
+        </div>
+
+        <div class="links">
+          <a class="btn primary" href="https://wa.me/2348012345678?text=Hello%20I%20would%20like%20to%20improve%20my%20retail%20profit" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn" href="mailto:miguel.choueiri@hotmail.com">Email</a>
+          <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </section>
+
     </div>
   </section>
 
 <script>
-  // ✅ Smooth scroll (keeps it consistent even if browser ignores scroll-behavior)
+  // Scroll reveal (Canva-like)
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('show');
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ===== PREMIUM ANCHOR SCROLLING =====
+  function easeInOutQuint(t){
+    return t < 0.5 ? 16*t*t*t*t*t : 1 - Math.pow(-2*t + 2, 5)/2;
+  }
+
+  function smoothScrollTo(targetY, duration){
+    const startY = window.scrollY || window.pageYOffset;
+    const diff = targetY - startY;
+    const start = performance.now();
+
+    function step(now){
+      const t = Math.min(1, (now - start) / duration);
+      const eased = easeInOutQuint(t);
+      window.scrollTo(0, startY + diff * eased);
+      if (t < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function animateJumpTo(hash){
+    const target = document.querySelector(hash);
+    if(!target) return;
+
+    target.classList.add('is-entering');
+
+    const headerOffset = 86;
+    const y = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+
+    const distance = Math.abs((window.scrollY || window.pageYOffset) - y);
+    const duration = Math.min(1200, Math.max(720, distance * 0.55));
+
+    smoothScrollTo(y, duration);
+
+    setTimeout(() => target.classList.remove('is-entering'), 140);
+
+    history.pushState(null, "", hash);
+  }
+
+  // Cover "Enter" button -> scroll to #home
   document.getElementById("enterBtn").addEventListener("click", (e) => {
     e.preventDefault();
-    document.getElementById("home").scrollIntoView({ behavior: "smooth", block: "start" });
+    animateJumpTo("#home");
+  });
+
+  // Intercept anchor clicks (#how, #contact, etc.)
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const hash = a.getAttribute('href');
+    if(!hash || hash === "#") return;
+
+    const target = document.querySelector(hash);
+    if(!target) return;
+
+    e.preventDefault();
+    animateJumpTo(hash);
+  });
+
+  // If landing directly on a hash, animate into it
+  window.addEventListener('load', () => {
+    if(location.hash && document.querySelector(location.hash)){
+      setTimeout(() => animateJumpTo(location.hash), 120);
+    }
   });
 </script>
 </body>
